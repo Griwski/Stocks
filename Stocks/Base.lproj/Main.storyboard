@@ -28,24 +28,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yn5-vL-pOh">
-                                <rect key="frame" x="0.0" y="680" width="0.0" height="216"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EY8-XY-cpp">
+                                <rect key="frame" x="0.0" y="627" width="0.0" height="269"/>
                             </pickerView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hK0-gD-c3v">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="yn5-vL-pOh" secondAttribute="bottom" id="6Xc-52-1QY"/>
+                            <constraint firstItem="hK0-gD-c3v" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3pj-5s-n7l"/>
+                            <constraint firstItem="hK0-gD-c3v" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4nd-VS-zmC"/>
                             <constraint firstItem="JIk-NJ-GH2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="808-hd-Pw9"/>
                             <constraint firstItem="JIk-NJ-GH2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ARN-qD-Bmw"/>
-                            <constraint firstItem="yn5-vL-pOh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MMz-1x-u3p"/>
+                            <constraint firstAttribute="bottom" secondItem="EY8-XY-cpp" secondAttribute="bottom" id="Oxx-VD-Kgm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="G2x-mb-26R" secondAttribute="trailing" constant="40" id="Ufq-4z-GpM"/>
-                            <constraint firstItem="yn5-vL-pOh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="UuX-9k-kXD"/>
+                            <constraint firstItem="EY8-XY-cpp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bii-tq-ZO0"/>
+                            <constraint firstItem="EY8-XY-cpp" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="exF-Ku-Xg0"/>
+                            <constraint firstItem="EY8-XY-cpp" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="luw-Qr-glf"/>
                             <constraint firstItem="G2x-mb-26R" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="sFk-pG-qn2"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="companyNameLabel" destination="G2x-mb-26R" id="Pgh-nE-ZNG"/>
+                        <outlet property="companyPickerView" destination="EY8-XY-cpp" id="Hsf-bz-j25"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
