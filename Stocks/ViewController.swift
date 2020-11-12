@@ -105,6 +105,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         symbolLabel.text = companySymbol
         priceLabel.text = String(price)
         priceChangeLabel.text = String(priceChange)
+        
+        switch priceChange {
+        case 0... :
+            priceChangeLabel.textColor = UIColor.green
+        case ...0 :
+            priceChangeLabel.textColor = UIColor.red
+        default:
+            priceChangeLabel.textColor = UIColor.black
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
