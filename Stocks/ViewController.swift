@@ -43,7 +43,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        companyNameLabel.text = "Tinkoff"
+       requestedQuoteUpdate()
         
         companyPickerView.dataSource = self
         companyPickerView.delegate = self
@@ -98,11 +98,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        requestedQuoteUpdate()
+//        activityIndicator.startAnimating()
+//        let selectedSymbol = Array(companies.values)[row]
+//        requestQuote(for: selectedSymbol)
+    }
+    private func requestedQuoteUpdate() {
         activityIndicator.startAnimating()
-        let selectedSymbol = Array(companies.values)[row]
+        companyNameLabel.text = "-"
+        
+        let selectedRow = companyPickerView.selectedRow(inComponent: 0)
+        let selectedSymbol = Array(companies.values)[selectedRow]
         requestQuote(for: selectedSymbol)
     }
-    
 }
 
 
