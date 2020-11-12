@@ -47,7 +47,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       requestedQuoteUpdate()
+        requestedQuoteUpdate()
         
         companyPickerView.dataSource = self
         companyPickerView.delegate = self
@@ -83,12 +83,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         do { let jsonObject = try JSONSerialization.jsonObject(with: data)
             guard
                 let json = jsonObject as? [String: Any],
-                let companyName = json["companyName"] as? String else {return print("Invalid JSON")}
-            print("Company Name is " + companyName)
+                let companyName = json["companyName"] as? String,
+                let companySymbol = json["symbol"] as? String,
+                let price = json["latestPrice"] as? Double,
+                let priceChange = json["change"] as? Double else {return print("Invalid JSON")}
+            
             
             DispatchQueue.main.async {
                 [weak self] in
-                self?.displayStockInfo(companyName: companyName)
+                self?.displayStockInfo(companyName: companyName, companySymbol: companySymbol, price: price, priceChange: priceChange)
             }
             
         } catch {
@@ -96,20 +99,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
-    private func displayStockInfo(companyName: String) {
+    private func displayStockInfo(companyName: String, companySymbol: String, price: Double, priceChange: Double) {
         activityIndicator.stopAnimating()
         companyNameLabel.text = companyName
+        symbolLabel.text = companySymbol
+        priceLabel.text = String(price)
+        priceChangeLabel.text = String(priceChange)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         requestedQuoteUpdate()
-//        activityIndicator.startAnimating()
-//        let selectedSymbol = Array(companies.values)[row]
-//        requestQuote(for: selectedSymbol)
+        //        activityIndicator.startAnimating()
+        //        let selectedSymbol = Array(companies.values)[row]
+        //        requestQuote(for: selectedSymbol)
     }
     private func requestedQuoteUpdate() {
         activityIndicator.startAnimating()
         companyNameLabel.text = "-"
+        symbolLabel.text = "-"
+        priceLabel.text = "-"
+        priceChangeLabel.text = "-"
         
         let selectedRow = companyPickerView.selectedRow(inComponent: 0)
         let selectedSymbol = Array(companies.values)[selectedRow]
