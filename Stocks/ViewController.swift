@@ -29,7 +29,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var symbolLabel: UILabel!
     
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    @IBOutlet weak var priceChangeLabel: UILabel!
     
     private lazy var companies = [
         "Apple" : "AAPL",
