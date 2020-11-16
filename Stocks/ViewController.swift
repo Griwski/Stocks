@@ -23,6 +23,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     
+    @IBOutlet weak var logoImageView: UIImageView!
+    
     @IBOutlet weak var companyNameLabel: UILabel!
     
     @IBOutlet weak var companyPickerView: UIPickerView!
@@ -64,9 +66,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote?token=\(token)") else {
             return
+        }
+        
+        guard let logoURL = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/logo?token=\(token)") else {
+            return
             
         }
-        let dataTask = URLSession.shared.dataTask(with: url) {[weak self] (data, response, error) in
+        
+        let dataTaskQuote = URLSession.shared.dataTask(with: url) {[weak self] (data, response, error) in
             if let data = data,
                (response as? HTTPURLResponse)?.statusCode == 200,
                error == nil {
@@ -75,9 +82,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 print("Network Error!")
             }
         }
+
+        dataTaskQuote.resume()
         
-        dataTask.resume()
+            let dataTaskLogo = URLSession.shared.dataTask(with: logoURL) {[weak self] (data, response, error) in
+                if let data = data,
+                   (response as? HTTPURLResponse)?.statusCode == 200,
+                   error == nil {
+                    self?.parseLogo(from: data)
+                }else {
+                    print("Network Error!")
+                }
+            }
+        
+            dataTaskLogo.resume()
+        
     }
+    
+
     
     private func parseQuote(from data: Data) {
         do { let jsonObject = try JSONSerialization.jsonObject(with: data)
@@ -87,6 +109,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 let companySymbol = json["symbol"] as? String,
                 let price = json["latestPrice"] as? Double,
                 let priceChange = json["change"] as? Double else {return print("Invalid JSON")}
+                
             
             
             DispatchQueue.main.async {
@@ -96,6 +119,22 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
         } catch {
             print("JSON parsing error " + error.localizedDescription)
+        }
+    }
+    
+    private func parseLogo(from data: Data) {
+        do {let jsonObject = try JSONSerialization.jsonObject(with: data)
+            guard let json = jsonObject as? [String: Any],
+                  let logoLink = json["url"] as? String else {return print("Invalid JSON")}
+            
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.displayLogo(logoLink: logoLink)
+            }
+            
+        } catch {
+            print("JSON parsing error " + error.localizedDescription)
+        
         }
     }
     
@@ -115,6 +154,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             priceChangeLabel.textColor = UIColor.black
         }
     }
+    private func displayLogo(logoLink: String) {
+        print(logoLink)
+    }
+    
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         requestedQuoteUpdate()
