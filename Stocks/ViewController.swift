@@ -58,6 +58,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         
     }
+ 
+        
+        
+    
     
     private func requestQuote(for symbol: String) {
         //https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_90090d9590a6471e8be38c9e29d75d58
@@ -155,8 +159,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     private func displayLogo(logoLink: String) {
-        print(logoLink)
-    }
+        
+        guard let url = URL(string: logoLink) else { return print("No logo") }
+
+            // Fetch Image Data
+            if let data = try? Data(contentsOf: url) {
+                // Create Image and Update Image View
+                logoImageView.image = UIImage(data: data)
+            }
+        }
+        
+    
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
