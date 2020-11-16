@@ -158,6 +158,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             priceChangeLabel.textColor = UIColor.black
         }
     }
+    
     private func displayLogo(logoLink: String) {
         
         guard let url = URL(string: logoLink) else { return print("No logo") }
@@ -174,9 +175,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         requestedQuoteUpdate()
-        //        activityIndicator.startAnimating()
-        //        let selectedSymbol = Array(companies.values)[row]
-        //        requestQuote(for: selectedSymbol)
+       
     }
     private func requestedQuoteUpdate() {
         activityIndicator.startAnimating()
